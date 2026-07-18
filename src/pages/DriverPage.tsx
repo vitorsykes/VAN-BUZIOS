@@ -5,7 +5,7 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { usePassengers } from '../hooks/usePassengers';
 import { VAN_LINES, Van } from '../types';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { db, auth } from '../services/firebase';
+import { db, auth, getUserId } from '../services/firebase';
 
 interface DriverPageProps {
   onBack: () => void;
@@ -16,7 +16,7 @@ export default function DriverPage({ onBack }: DriverPageProps) {
   const [name, setName] = useState('');
   const [line, setLine] = useState('');
   
-  const userId = auth.currentUser?.uid;
+  const userId = getUserId();
   
   const [status, setStatus] = useState<Van['status']>('Em operação');
   const [seats, setSeats] = useState(15);

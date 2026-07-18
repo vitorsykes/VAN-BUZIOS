@@ -30,3 +30,18 @@ export const signInAnonymously = async () => {
     throw error;
   }
 };
+
+// Guarantee a unique ID for users even if authentication is blocked or fails
+export const getUserId = (): string => {
+  if (auth.currentUser?.uid) {
+    return auth.currentUser.uid;
+  }
+  
+  let localId = localStorage.getItem('van_local_uid');
+  if (!localId) {
+    localId = 'guest_' + Math.random().toString(36).substring(2, 15);
+    localStorage.setItem('van_local_uid', localId);
+  }
+  return localId;
+};
+

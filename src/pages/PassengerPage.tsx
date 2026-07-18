@@ -5,7 +5,7 @@ import { useVans } from '../hooks/useVans';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { VAN_LINES } from '../types';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { db, auth } from '../services/firebase';
+import { db, auth, getUserId } from '../services/firebase';
 import { calculateDistance, formatDistance } from '../utils/distance';
 
 interface PassengerPageProps {
@@ -14,7 +14,7 @@ interface PassengerPageProps {
 
 export default function PassengerPage({ onBack }: PassengerPageProps) {
   const [line, setLine] = useState<string>('');
-  const userId = auth.currentUser?.uid;
+  const userId = getUserId();
   const [inVan, setInVan] = useState<string | null>(null);
   const [isCalibrating, setIsCalibrating] = useState(false);
   const [recenterFlag, setRecenterFlag] = useState(0);
