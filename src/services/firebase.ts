@@ -26,7 +26,7 @@ export const signInAnonymously = async () => {
     const result = await firebaseSignInAnonymously(auth);
     return result.user;
   } catch (error) {
-    console.error("Error signing in anonymously", error);
+    console.warn("Notice: Google Firebase Anonymous Auth is not enabled in your console. Falling back to local guest ID.", error);
     throw error;
   }
 };

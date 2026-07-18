@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, MapPin } from 'lucide-react';
+import { ArrowLeft, MapPin, Power, LogOut } from 'lucide-react';
 import Map from '../components/Map';
 import { useVans } from '../hooks/useVans';
 import { useGeolocation } from '../hooks/useGeolocation';
@@ -102,6 +102,15 @@ export default function PassengerPage({ onBack }: PassengerPageProps) {
     }
   };
 
+  const handleCloseApp = () => {
+    if (userId) {
+      deleteDoc(doc(db, 'passengers', userId)).catch(console.error);
+    }
+    setInVan(null);
+    setLine('');
+    onBack();
+  };
+
   const handleCalibrate = () => {
     setIsCalibrating(true);
     refreshLocation?.();
@@ -111,7 +120,7 @@ export default function PassengerPage({ onBack }: PassengerPageProps) {
 
   if (!line && !inVan) {
     return (
-      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 p-6 pb-24">
         <button onClick={onBack} className="mb-6 self-start p-2 -ml-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-white transition-colors">
           <ArrowLeft size={24} />
         </button>
@@ -126,6 +135,16 @@ export default function PassengerPage({ onBack }: PassengerPageProps) {
               <span className="font-semibold text-lg dark:text-white text-slate-800">{l}</span>
             </button>
           ))}
+        </div>
+
+        <div className="pt-6 border-t border-slate-200 dark:border-slate-800 mt-8">
+          <button
+            onClick={onBack}
+            className="w-full bg-red-50 hover:bg-red-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-red-600 dark:text-red-400 font-bold py-3.5 rounded-xl transition-all active:scale-95 text-base flex items-center justify-center gap-2 cursor-pointer border border-red-100 dark:border-slate-700"
+          >
+            <Power size={18} />
+            FECHAR APLICATIVO
+          </button>
         </div>
       </div>
     );
@@ -162,21 +181,37 @@ export default function PassengerPage({ onBack }: PassengerPageProps) {
         {inVan ? (
           <div className="text-center">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Boa viagem!</h3>
-            <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">Sua localização está ajudando outros passageiros.</p>
+            <p className="text-slate-500 dark:text-slate-400 mb-4 text-sm">Sua localização está ajudando outros passageiros.</p>
             <button
               onClick={handleLeaveVan}
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl shadow transition-colors"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow transition-colors mb-2.5"
             >
               Saí da van
+            </button>
+            <button
+              onClick={handleCloseApp}
+              className="w-full bg-red-50 hover:bg-red-100 dark:bg-slate-900/80 dark:hover:bg-slate-900 text-red-600 dark:text-red-400 font-bold py-3 rounded-xl transition-all active:scale-95 text-sm flex items-center justify-center gap-2 border border-red-50/10"
+            >
+              <Power size={14} />
+              FECHAR APLICATIVO
             </button>
           </div>
         ) : (
           <div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Vans na linha {line}</h3>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Vans na linha {line}</h3>
+              <button
+                onClick={handleCloseApp}
+                className="text-xs text-red-600 dark:text-red-400 font-bold flex items-center gap-1 hover:underline cursor-pointer"
+              >
+                <Power size={12} />
+                Fechar
+              </button>
+            </div>
             {vans.length === 0 ? (
-              <p className="text-slate-500 text-sm">Nenhuma van operando no momento.</p>
+              <p className="text-slate-500 text-sm mb-4">Nenhuma van operando no momento.</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-3 mb-4">
                 {vans.map(van => {
                   const dist = location ? calculateDistance(location, van.location) : 0;
                   return (
@@ -204,6 +239,14 @@ export default function PassengerPage({ onBack }: PassengerPageProps) {
                 })}
               </div>
             )}
+            
+            <button
+              onClick={handleCloseApp}
+              className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/60 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2.5 rounded-xl transition-all active:scale-95 text-xs flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-600 cursor-pointer"
+            >
+              <Power size={14} className="text-red-500" />
+              FECHAR APLICATIVO
+            </button>
           </div>
         )}
       </div>

@@ -33,5 +33,6 @@ export const VAN_LINES = [
   'Baía Formosa',
   'Centro',
   'Manguinhos',
-  'José Gonçalves'
+  'José Gonçalves',
+  'Tucuns'
 ];

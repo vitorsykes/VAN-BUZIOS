@@ -50,18 +50,46 @@ const createVanIcon = (van: Van) => {
   });
 };
 
-const passengerIcon = new L.Icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-  iconSize: [24, 24],
-  iconAnchor: [12, 24],
-  popupAnchor: [0, -24],
+const passengerIcon = L.divIcon({
+  className: 'custom-passenger-icon',
+  html: `
+    <div style="position: relative; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#10b981" stroke="#ffffff" stroke-width="1.5" style="width: 26px; height: 26px; filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.35));">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+    </div>
+  `,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
 });
 
-const userIcon = new L.Icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/7901/7901170.png', // a blue dot or special pin
-  iconSize: [28, 28],
-  iconAnchor: [14, 28],
-  popupAnchor: [0, -28],
+const userIcon = L.divIcon({
+  className: 'custom-user-icon',
+  html: `
+    <div style="position: relative; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+      <div style="
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(37, 99, 235, 0.45);
+        border-radius: 50%;
+        animation: user-pin-pulse 1.8s ease-out infinite;
+      "></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" style="width: 28px; height: 28px; position: relative; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4));">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+    </div>
+    <style>
+      @keyframes user-pin-pulse {
+        0% { transform: scale(0.4); opacity: 1; }
+        100% { transform: scale(1.6); opacity: 0; }
+      }
+    </style>
+  `,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
 });
 
 interface MapProps {
