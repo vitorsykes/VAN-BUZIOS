@@ -1,0 +1,10 @@
+{
+  "name": "Remix: Van Local",
+  "description": "Aplicativo de rastreamento de vans em tempo real",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
